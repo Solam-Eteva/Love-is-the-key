@@ -1,0 +1,173 @@
+"""
+Core logic and lexicon for the Unity Coefficient Algorithm (UCA).
+
+This module contains the intellectual foundation of the Love Protocol:
+the carefully curated lexicons that distinguish separation-based consciousness
+from unity-based consciousness, and the protocol adapters that calculate
+the Unity Coefficient.
+"""
+
+from .models import UnityReport
+from typing import List
+
+# --- The Core Lexicon (P3) ---
+# This is the most vital step: the philosophical foundation that gives
+# the V1 algorithm immediate, measurable value.
+
+# **PLACEHOLDER 1: LEXICON EXPANSION** - This is the most vital step.
+# These lists should be meticulously expanded to capture the full spectrum
+# of separation and unity consciousness in language.
+
+SEPARATION_MARKERS: List[str] = [
+    # Core separation concepts
+    "fear", "lack", "impossible", "us versus them", "judgement",
+    "crisis", "scarcity", "division", "conflict", "enemy",
+    
+    # Expanded separation terms
+    "zero-sum", "my way", "compete", "dominate", "control",
+    "threat", "danger", "attack", "defend", "protect",
+    "limited", "finite", "not enough", "mine", "yours",
+    "separate", "isolated", "alone", "abandoned", "rejected",
+    "failure", "loss", "defeat", "victim", "powerless",
+    "hate", "anger", "resentment", "revenge", "punishment",
+    "wrong", "bad", "evil", "sin", "guilt",
+    "shame", "blame", "fault", "mistake", "error",
+    "weak", "inferior", "less than", "unworthy", "inadequate",
+    "impossible", "can't", "won't", "never", "hopeless",
+    "desperate", "anxious", "worried", "stressed", "overwhelmed",
+    "chaos", "disorder", "destruction", "collapse", "end",
+    "death", "dying", "terminal", "fatal", "doomed",
+    "exclusive", "elite", "superior", "better than", "privilege",
+    "hierarchy", "rank", "status", "class", "caste",
+    "border", "boundary", "wall", "barrier", "fence",
+    "restriction", "limitation", "constraint", "prohibition", "ban",
+    "competition", "rivalry", "opponent", "adversary", "foe",
+]
+
+UNITY_MARKERS: List[str] = [
+    # Core unity concepts
+    "love", "unity", "co-create", "abundance", "possibility",
+    "solution", "harmony", "peace", "together", "collaboration",
+    
+    # Expanded unity terms
+    "shared source", "potential", "oneness", "wholeness", "integration",
+    "connection", "relationship", "bond", "link", "bridge",
+    "infinite", "unlimited", "boundless", "endless", "eternal",
+    "ours", "we", "us", "collective", "community",
+    "together", "united", "joined", "merged", "combined",
+    "success", "victory", "triumph", "achievement", "accomplishment",
+    "empowerment", "strength", "capability", "capacity", "ability",
+    "compassion", "kindness", "care", "support", "help",
+    "forgiveness", "acceptance", "understanding", "empathy", "sympathy",
+    "right", "good", "virtue", "merit", "worth",
+    "honor", "respect", "dignity", "value", "appreciation",
+    "strong", "capable", "worthy", "deserving", "adequate",
+    "possible", "can", "will", "always", "hopeful",
+    "calm", "peaceful", "serene", "tranquil", "relaxed",
+    "order", "harmony", "balance", "equilibrium", "stability",
+    "life", "living", "vital", "vibrant", "thriving",
+    "inclusive", "open", "welcoming", "accepting", "embracing",
+    "equality", "fairness", "justice", "equity", "balance",
+    "opening", "gateway", "portal", "passage", "access",
+    "freedom", "liberty", "autonomy", "independence", "sovereignty",
+    "cooperation", "partnership", "alliance", "synergy", "symbiosis",
+    "trust", "faith", "belief", "confidence", "assurance",
+    "joy", "happiness", "delight", "pleasure", "bliss",
+    "gratitude", "thankfulness", "appreciation", "acknowledgment", "recognition",
+    "growth", "development", "evolution", "progress", "advancement",
+    "creation", "generation", "manifestation", "emergence", "birth",
+    "light", "illumination", "clarity", "insight", "wisdom",
+    "truth", "authenticity", "genuineness", "sincerity", "honesty",
+    "beauty", "grace", "elegance", "refinement", "excellence",
+]
+
+
+# --- V1 Implementation: Keyword Lexicon Adapter (P4) ---
+
+def v1_keyword_calculate(text: str) -> UnityReport:
+    """
+    V1 Protocol: Calculates Unity Coefficient based on simple keyword density.
+    
+    This is the immediate utility for LLMs via fast, quantifiable metrics.
+    The algorithm counts occurrences of separation and unity markers in the text,
+    then calculates a coefficient representing the balance between them.
+    
+    Args:
+        text: The input text to analyze (can be content, code comments, policies, etc.)
+        
+    Returns:
+        UnityReport: A structured report containing the coefficient and detailed analysis
+        
+    Algorithm:
+        1. Convert text to lowercase for case-insensitive matching
+        2. Count occurrences of each marker in both lexicons
+        3. Calculate coefficient: unity_count / (unity_count + separation_count)
+        4. Generate conscious reframing based on coefficient thresholds
+    """
+    text_lower = text.lower()
+    separation_hits = {}
+    unity_hits = {}
+    
+    # 1. Count Markers
+    for marker in SEPARATION_MARKERS:
+        count = text_lower.count(marker)
+        if count > 0:
+            separation_hits[marker] = count
+    
+    for marker in UNITY_MARKERS:
+        count = text_lower.count(marker)
+        if count > 0:
+            unity_hits[marker] = count
+    
+    separation_count = sum(separation_hits.values())
+    unity_count = sum(unity_hits.values())
+    total_markers = separation_count + unity_count
+    
+    # 2. Calculate Coefficient
+    if total_markers == 0:
+        coefficient = 0.5  # Neutral baseline
+    else:
+        coefficient = unity_count / total_markers
+    
+    # 3. Conscious Reframing Logic
+    if coefficient >= 0.75:
+        reframing = "High Unity Alignment. The intent is rooted in love and abundance."
+    elif coefficient >= 0.5:
+        reframing = "Balanced Alignment. The potential for conscious co-creation is strong, requiring only slight reframing."
+    else:
+        # **PLACEHOLDER 2: REFRAMING ALGORITHM** - Future development point
+        reframing = "The content leans towards separation logic. Re-evaluate the core premise from the perspective of our shared source and inherent abundance."
+    
+    return UnityReport(
+        coefficient=round(coefficient, 4),
+        analysis_method="V1: Keyword Lexicon Density",
+        separation_hits=separation_hits,
+        unity_hits=unity_hits,
+        conscious_reframing=reframing
+    )
+
+
+# --- Main Entry Point ---
+
+def get_unity_report(text: str) -> UnityReport:
+    """
+    Primary function for external systems (LLMs, APIs) to call.
+    
+    This function will be the future hub for advanced Protocol Adapters.
+    Currently, it routes all requests to the V1 keyword-based adapter.
+    
+    Args:
+        text: The input text to analyze
+        
+    Returns:
+        UnityReport: A structured report with the Unity Coefficient and analysis
+        
+    Future Development:
+        **PLACEHOLDER 3: ADAPTER SELECTION LOGIC** - When V2 (e.g., NLP or Vector
+        Embeddings) is built, the logic here will dynamically switch to the more
+        advanced adapter based on configuration.
+    """
+    # When V2 (e.g., NLP or Vector Embeddings) is built, the logic here will
+    # dynamically switch to the more advanced adapter based on configuration.
+    return v1_keyword_calculate(text)
+
