@@ -7,7 +7,7 @@ by LLMs, APIs, and computational systems.
 """
 
 from pydantic import BaseModel, Field
-from typing import Dict
+from typing import Dict, Optional, Any
 
 
 class UnityReport(BaseModel):
@@ -48,6 +48,11 @@ class UnityReport(BaseModel):
     
     conscious_reframing: str = Field(
         description="A suggestion to align the content with abundance and unity."
+    )
+    
+    context_info: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description="Contextual analysis including content type, creative license, and interpretation."
     )
     
     model_config = {

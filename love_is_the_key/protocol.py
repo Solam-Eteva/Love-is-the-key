@@ -8,7 +8,8 @@ the Unity Coefficient.
 """
 
 from .models import UnityReport
-from typing import List
+from .context import detect_context, contextualize_analysis, ContentContext
+from typing import List, Optional, Dict, Any
 
 # --- The Core Lexicon (P3) ---
 # This is the most vital step: the philosophical foundation that gives
@@ -53,7 +54,7 @@ UNITY_MARKERS: List[str] = [
     "shared source", "potential", "oneness", "wholeness", "integration",
     "connection", "relationship", "bond", "link", "bridge",
     "infinite", "unlimited", "boundless", "endless", "eternal",
-    "ours", "we", "us", "collective", "community",
+    "collective", "community", "all beings", "everyone", "humanity",
     "together", "united", "joined", "merged", "combined",
     "success", "victory", "triumph", "achievement", "accomplishment",
     "empowerment", "strength", "capability", "capacity", "ability",
@@ -149,25 +150,106 @@ def v1_keyword_calculate(text: str) -> UnityReport:
 
 # --- Main Entry Point ---
 
-def get_unity_report(text: str) -> UnityReport:
+def get_unity_report(
+    text: str,
+    user_context: Optional[Dict] = None,
+    include_context: bool = True
+) -> UnityReport:
     """
     Primary function for external systems (LLMs, APIs) to call.
     
-    This function will be the future hub for advanced Protocol Adapters.
-    Currently, it routes all requests to the V1 keyword-based adapter.
+    This function provides context-aware consciousness evaluation that respects
+    creative expression and human sovereignty. The analysis is informative
+    rather than restrictive, illuminating consciousness patterns without
+    imposing judgments or limitations.
     
     Args:
         text: The input text to analyze
+        user_context: Optional context hints (type, genre, intent, etc.)
+        include_context: Whether to include contextual analysis (default: True)
         
     Returns:
-        UnityReport: A structured report with the Unity Coefficient and analysis
+        UnityReport: A structured report with context-aware consciousness analysis
+        
+    Philosophy:
+        - Illuminate, don't restrict
+        - Inform, don't impose
+        - Suggest, don't demand
+        - Learn, don't judge
+        - Respect sovereignty always
         
     Future Development:
         **PLACEHOLDER 3: ADAPTER SELECTION LOGIC** - When V2 (e.g., NLP or Vector
         Embeddings) is built, the logic here will dynamically switch to the more
         advanced adapter based on configuration.
     """
-    # When V2 (e.g., NLP or Vector Embeddings) is built, the logic here will
-    # dynamically switch to the more advanced adapter based on configuration.
-    return v1_keyword_calculate(text)
+    # Get base unity coefficient using V1 algorithm
+    base_report = v1_keyword_calculate(text)
+    
+    # If context awareness is disabled, return base report
+    if not include_context:
+        return base_report
+    
+    # Add context intelligence
+    context_data = contextualize_analysis(
+        coefficient=base_report.coefficient,
+        text=text,
+        user_context=user_context
+    )
+    
+    # Enhance the report with contextual information
+    enhanced_report = UnityReport(
+        coefficient=base_report.coefficient,
+        analysis_method=base_report.analysis_method,
+        separation_hits=base_report.separation_hits,
+        unity_hits=base_report.unity_hits,
+        conscious_reframing=_generate_context_aware_reframing(
+            base_report.conscious_reframing,
+            context_data
+        ),
+        context_info=context_data
+    )
+    
+    return enhanced_report
+
+
+def _generate_context_aware_reframing(
+    base_reframing: str,
+    context_data: Dict[str, Any]
+) -> str:
+    """
+    Generate context-aware reframing that respects creative license.
+    
+    Args:
+        base_reframing: The original reframing suggestion
+        context_data: Contextual analysis data
+        
+    Returns:
+        Context-aware reframing message
+    """
+    context: ContentContext = context_data["context"]
+    
+    # For creative content, acknowledge and respect artistic expression
+    if context.creative_license:
+        return (
+            f"{context_data['interpretation']}\n\n"
+            f"Creative Expression Recognized:\n"
+            f"Your artistic vision is respected. No reframing suggested.\n"
+            f"The consciousness patterns detected are appropriate for {context.content_type.value} content."
+        )
+    
+    # For non-creative content, provide helpful suggestions if appropriate
+    if context_data["reframing_appropriate"]:
+        return (
+            f"{context_data['interpretation']}\n\n"
+            f"Observation: {base_reframing}\n\n"
+            f"Note: This is informational only. You have complete sovereignty "
+            f"over your expression. Alternative framings are available if desired."
+        )
+    
+    # For balanced or high-unity content
+    return (
+        f"{context_data['interpretation']}\n\n"
+        f"{base_reframing}"
+    )
 
